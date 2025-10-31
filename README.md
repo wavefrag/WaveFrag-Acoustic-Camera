@@ -20,13 +20,12 @@ WaveFrag 声学相机提供高性能声学成像与信号处理系统，适用�
 - 📑 [API Reference (optional)](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/API_Reference)
 
 
-## Features
+## Software Features
 - 多通道麦克风阵列采集
 - 实时声源定位与声压图生成
-- 支持 Python / MATLAB SDK 接口
 - 数据可视化功能
 - 支持 FFT、Beamforming 等信号处理算法
-- 灵活配置采样率和处理参数
+- 灵活配置硬件滤波器
 
 
 ## Installation
@@ -36,7 +35,7 @@ WaveFrag 声学相机提供高性能声学成像与信号处理系统，适用�
 - 安装指南详见 [Getting Started](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Getting_Started)
 
 ## Example
-以下示例展示如何使用 Matlab 配合涉笔进行声源定位：
+以下示例展示如何使用 Matlab 配合本设备进行声源定位：
 
 
 ```matlab

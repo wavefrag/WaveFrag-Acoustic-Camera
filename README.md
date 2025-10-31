@@ -19,13 +19,18 @@ WaveFrag 声学相机提供高性能声学成像与信号处理系统，适用�
 - ⚠️ [Troubleshooting](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Troubleshooting)
 - 📑 [API Reference (optional)](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/API_Reference)
 
+## Hardware Features
+- 多通道麦克风阵列采集
+- 可配置网络参数
+- 即插即用
+- 可配置硬件滤波器参数
 
+  
 ## Software Features
 - 多通道麦克风阵列采集
 - 实时声源定位与声压图生成
 - 数据可视化功能
 - 支持 FFT、Beamforming 等信号处理算法
-- 灵活配置硬件滤波器
 
 
 ## Installation

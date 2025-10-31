@@ -1,4 +1,4 @@
-![声学相机正面视图](docs/images/WF.png)
+![声学相机正面视图](docs/images/WF_Rev001.png)
 # WaveFrag-Acoustic-Camera
 专注于高性能声学成像与信号处理系统。我们研发声学相机与阵列采集设备，并为开发者提供实用的案例。
 

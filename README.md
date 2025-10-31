@@ -52,7 +52,6 @@ clear;
 For common issues and solutions, please refer to [Troubleshooting](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Troubleshooting)
 
 ## License / 许可
-WaveFrag-Acoustic-Camera 遵循 MIT License。详见 [LICENSE](LICENSE)  
 WaveFrag-Acoustic-Camera is licensed under MIT License. See [LICENSE](LICENSE)
 
 ## Contact / Support / 联系方式

@@ -18,6 +18,9 @@ The project documentation is maintained on GitHub Wiki for easy access and conti
 - ⚠️ [Troubleshooting](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Troubleshooting)
 - 📑 [API Reference (optional)](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/API_Reference)
 
+想要下载PDF说明书？
+[下载用户手册 PDF](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/blob/main/docs/WaveFrag_UserManual_v1.0.pdf)
+
 ## Hardware Features / 硬件功能
 - 多通道麦克风阵列采集 / Multi-channel microphone array acquisition
 - 可配置网络参数 / Configurable network parameters

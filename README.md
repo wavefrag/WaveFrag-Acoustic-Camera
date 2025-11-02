@@ -4,7 +4,7 @@
 [![Actions Status](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/actions/workflows/tests.yml/badge.svg)](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/actions)
 [![License](https://img.shields.io/github/license/wavefrag/WaveFrag-Acoustic-Camera)](LICENSE)
 
-# WaveFrag-Acoustic-Camera
+# WaveFrag-AcousticCamera
 WaveFrag 声学相机提供高性能声学成像与信号处理系统，适用于实验室和个人开发者进行多通道声源定位与分析。  
 WaveFrag Acoustic Camera provides a high-performance acoustic imaging and signal processing system, suitable for labs and individual developers for multi-channel source localization and analysis.
 

@@ -39,12 +39,121 @@ The project documentation is maintained on GitHub Wiki for easy access and conti
 - 安装指南详见 [Getting Started](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Getting_Started) / Installation guide see [Getting Started](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Getting_Started)
 
 ## Example / 示例
-以下示例展示如何使用 Matlab 配合本设备进行声源定位：  
-This example shows how to use Matlab with the device for source localization:
+以下示例展示如何使用 Matlab 配合本设备进行多通道声源示波：  
+The following example demonstrates how to use Matlab in conjunction with this device to perform multi-channel sound source visualization:
 
 ```matlab
+% 作者：WaveFrag
+%功能：多通道时域、频域信号示波
 clc;
-clear;
+clear all;
+
+%% UDP 初始化
+feature('DefaultCharacterSet','UTF8');
+u = udpport('IPV4','LocalHost','192.168.0.82','LocalPort',3860);
+u.Timeout = 0.05;
+u.ByteOrder = 'little-endian';
+
+%% 参数设置
+FreSampling = 80000;         % 采样率
+FramePerSecond = 100;        % 刷新帧率
+num_cols = 128;              % 通道数
+FrameLen = round((2/FramePerSecond) * FreSampling);  % 单帧长度
+buffer_size = FrameLen;
+
+%% 通道选择（重排128通道为16通道）
+row_indices = zeros(1,128);
+for k = 1:8
+    start_idx = k;
+    end_idx = 120 + k;
+    indices = start_idx:8:end_idx;
+    row_indices((k-1)*16+1:k*16) = indices;
+end
+num_signals = length(row_indices);
+
+%% 初始化绘图界面
+fig = figure('Name','UDP 实时示波器','NumberTitle','off','Position',[100 100 950 600]);
+
+% 通道选择下拉框
+uicontrol('Style','text','String','显示通道：',...
+    'Position',[40 560 80 20],'HorizontalAlignment','left','FontSize',9);
+popup = uicontrol('Style','popupmenu',...
+    'String',arrayfun(@(x) sprintf('通道 %d',x),1:num_signals,'UniformOutput',false),...
+    'Position',[120 560 100 22],'FontSize',9);
+
+% 开始、停止按钮
+btnStart = uicontrol('Style','pushbutton','String','开始示波',...
+    'Position',[250 558 100 25],'FontSize',9,'BackgroundColor',[0.7 1 0.7]);
+btnStop = uicontrol('Style','pushbutton','String','停止示波',...
+    'Position',[360 558 100 25],'FontSize',9,'BackgroundColor',[1 0.7 0.7]);
+
+% ==== 预分配 ====
+signal = zeros(num_signals, buffer_size, 'double');
+data_dec = zeros(1, FrameLen*num_cols, 'int16');
+data_matrix = zeros(num_cols, FrameLen, 'int16');
+data_matrix_reordered = zeros(num_signals, FrameLen, 'int16');
+sig = zeros(1, buffer_size, 'double');
+X = zeros(1, buffer_size/2, 'double');
+tmp_fft = zeros(1, buffer_size, 'double');
+
+% ==== 绘图初始化 ====
+ax1 = subplot(2,1,1);
+hPlotTime = plot(ax1, 1:buffer_size, zeros(1,buffer_size));
+title(ax1,'实时波形');
+xlabel(ax1,'采样点');
+ylabel(ax1,'幅度');
+
+ax2 = subplot(2,1,2);
+fAxis = linspace(0, FreSampling/2, buffer_size/2);
+hPlotFreq = plot(ax2, fAxis, zeros(1,buffer_size/2));
+title(ax2,'实时频谱');
+xlabel(ax2,'频率 (Hz)');
+ylabel(ax2,'幅度');
+xlim(ax2,[100 FreSampling/2]);
+
+%% 状态变量
+isRunning = false;  % 控制采集循环
+
+% 按钮回调函数
+btnStart.Callback = @(~,~) assignin('base','isRunning',true);
+btnStop.Callback = @(~,~) assignin('base','isRunning',false);
+
+%% 主循环
+while ishandle(fig)
+    % 检查运行状态
+    if evalin('base','isRunning')
+        % 读取UDP数据
+        raw = read(u, FrameLen*num_cols, 'int16');
+        if isempty(raw)
+            continue;
+        end
+        
+        % 使用预分配内存
+        data_dec(:) = raw;
+        num_data = numel(data_dec);
+        num_rows = num_data / num_cols;
+        data_matrix(:) = reshape(data_dec, num_cols, num_rows);
+        data_matrix_reordered(:) = data_matrix(row_indices, :);
+        
+        % 当前通道选择
+        ch = popup.Value;
+        sig(:) = double(data_matrix_reordered(ch, :));
+        
+        % 更新时域
+        set(hPlotTime, 'YData', sig);
+        
+        % 更新频域
+        tmp_fft(:) = abs(fft(sig, buffer_size));
+        X(:) = tmp_fft(1:buffer_size/2);
+        set(hPlotFreq, 'YData', X);
+        
+        % 显示
+        drawnow limitrate;
+        flush(u);
+    else
+        pause(0.05); % 停止状态下小睡一下，防止空转CPU
+    end
+end
 % 添加示例 Matlab 代码 / Add example Matlab code here
 ```
 

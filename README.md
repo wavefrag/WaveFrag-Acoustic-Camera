@@ -159,6 +159,7 @@ end
 
 ![Example Result](docs/images/example_result.png)
 
+
 ## Troubleshooting & FAQ / 常见问题
 - 常见问题与解决方法请参见 [Troubleshooting](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Troubleshooting)  
 For common issues and solutions, please refer to [Troubleshooting](https://github.com/wavefrag/WaveFrag-Acoustic-Camera/wiki/Troubleshooting)
